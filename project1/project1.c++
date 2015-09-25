@@ -18,7 +18,7 @@ void readFile()
     is.open("ExchangeRates.csv");
     if(is.fail())
     {
-        std::cout << "OOPS" << std::endl;
+         //std::cout << "OOPS" << std::endl;
         exit(-1);
     }
     std::string date;
@@ -42,7 +42,7 @@ void readFile()
         //std::cout << rate1 << comma << rate2 << comma << rate3 << comma << rate4 << std::endl;
         //std::cin >> comma;
     }
-    std::cout << "SIZES: " << line1.size() << ", " << line2.size() << ", " << line3.size() << ", " << line4.size() << std::endl;
+    //std::cout << "SIZES: " << line1.size() << ", " << line2.size() << ", " << line3.size() << ", " << line4.size() << std::endl;
 }
 
 int main(int argc, char* argv[])
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
         float color[3] = {0.0, 0.0, 1.0};
 
 	GLFWController c(argv[0]);
-	c.reportVersions(std::cout);
+        c.reportVersions(std::cout);
 
 
         //Color = { 0.0, 0.0, 1.0 }
@@ -74,15 +74,30 @@ int main(int argc, char* argv[])
         //Going to use GL_LINES, so we need to define each line
         //It will draw 0-1, then 2-3, then 4-5, then 6-7
         //It will skip every other vertex connection and not draw a line between them
-        /** Define the coords for the axes */
-        vec3 axisCoords[23] = {
+        // Define the coords for the axes
+        /** vec2 axisCoords[23] = {
             {0,0}, {0, 2}, {121, 0}, {121, 0.2}, {0, 0.2}, {0, 0.4}, {121, 0.4}, {121, 0.6}, {0, 0.6},
             {0, 0.8}, {121, 0.8}, {121, 1.0}, {0, 1.0}, {0, 1.2}, {121, 1.2}, {121, 1.4}, {0, 1.4},
             {0, 1.6}, {121, 1.6}, {121, 1.8}, {0, 1.8}, {0, 2.0}, {121, 2.0}
+        }; */
+
+        vec2 axisCoords[] = {
+            {0, 0}, {0, 1.4}, {121, 0}, {0, 0}, {0, 0.2}, {121, 0.2}, {121, 0.4}, {0, 0.4},
+            {0, 0.6}, {121, 0.6}, {121, 0.8}, {0, 0.8}, {0, 1.0}, {121, 1.0}, {121, 1.2},
+            {0, 1.2}, {0, 1.4}, {121, 1.4}
         };
 
-        color[0] = 0; color[1] = 0; color[2] = 0;
-        c.addModel(new ModelView(axisCoords, color, 23));
+
+/*
+        vec2 axisCoords[23] = {
+          {121, 0}, {0, 0}, {0, 0.2}, {121, 0.2}, {0, 0.2}, {0, 0.4}, {121, 0.4}, {0, 0.4},
+          {0, 0.6}, {121, 0.6}, {0, 0.6}, {0, 0.8}, {121, 0.8}, {0, 0.8},
+          {0, 1.0}, {121, 1.0}, {0, 1.0}, {0, 1.2}, {121, 1.2}, {0, 1.2},
+          {0, 1.4}, {121, 1.4}, {0, 1.4}
+        }; */
+
+        color[0] = 0.0; color[1] = 0.0; color[2] = 0.0;
+        c.addModel(new ModelView(axisCoords, color, 18));
 
 	// initialize 2D viewing information:
 	// Get the overall scene bounding box in Model Coordinates:
