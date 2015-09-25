@@ -26,7 +26,7 @@ public:
         ModelView(std::vector<float> values, float colors[3]);
 
         //Second constructor so that I don't lose my work building the vectors that hold the coordinates
-        ModelView(vec3 *coords, float colors[3], int numVerts);
+        ModelView(vec2 *coords, float colors[3], int numVerts);
 	virtual ~ModelView();
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
@@ -85,6 +85,10 @@ private:
         float xmin, xmax, ymin, ymax;
 
         vec3 drawColor;
+
+        bool drawAsLines;
+
+        int numVertices;
 };
 
 #endif
