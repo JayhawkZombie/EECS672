@@ -19,6 +19,9 @@ GLint ModelView::pvaLoc_mcPosition = -2;
 
 ModelView::ModelView(std::vector<float> coord, float colors[3])
 {
+    drawAsLines = false;
+    numVertices = coord.size();
+
 	if (ModelView::shaderProgram == 0)
 	{
 		// Create the common shader program:
@@ -52,12 +55,21 @@ ModelView::ModelView(std::vector<float> coord, float colors[3])
         initModelGeometry(c, coord.size());
 	ModelView::numInstances++;
 
+        xmax = xmax + 0.2;
+        //ymax = ymax + 0.2;
+        xmin = xmin - 0.2;
+        ymin = ymin - 0.02;
+
         delete[] c;
-        std::cerr << "drawColor[0] = " << drawColor[0] << " | drawColor[1] = " << drawColor[1] << " | drawColor[2] = " << drawColor[2] << std::endl;
+        //std::cerr << "drawColor[0] = " << drawColor[0] << " | drawColor[1] = " << drawColor[1] << " | drawColor[2] = " << drawColor[2] << std::endl;
 }
 
-ModelView::ModelView(vec3 *coords, float colors[], int numVerts)
+ModelView::ModelView(vec2 *coords, float colors[], int numVerts)
 {
+    drawAsLines = true;
+
+    numVertices = numVerts;
+
     if (ModelView::shaderProgram == 0)
     {
             // Create the common shader program:
@@ -82,18 +94,21 @@ ModelView::ModelView(vec3 *coords, float colors[], int numVerts)
         if (coords[i][0] > xmax)
             xmax = coords[i][1];
 
+        //std::cout << "X: " << coords[i][0] << ", Y: " << coords[i][1] << std::endl;
+        c[i][0] = coords[i][0];
+        c[i][1] = coords[i][1];
     }
 
     xmax = xmax + 0.2;
-    ymax = ymax + 0.2;
+    //ymax = ymax + 0.2;
     xmin = xmin - 0.2;
-    ymin = ymin - 0.2;
+    ymin = ymin - 0.02;
 
     initModelGeometry(c, numVerts);
     ModelView::numInstances++;
 
     delete[] c;
-    std::cerr << "drawColor[0] = " << drawColor[0] << " | drawColor[1] = " << drawColor[1] << " | drawColor[2] = " << drawColor[2] << std::endl;
+    //std::cerr << "drawColor[0] = " << drawColor[0] << " | drawColor[1] = " << drawColor[1] << " | drawColor[2] = " << drawColor[2] << std::endl;
 }
 
 void ModelView::initModelGeometry(vec2 *coords, int numVerts)
@@ -257,8 +272,10 @@ void ModelView::render() const
     glBindVertexArray(vao[0]);
 
     // Draw the i-th triangle.
-    //glLineWidth(3.0);
-    glDrawArrays(GL_LINE_STRIP, 0, 121);
+    if (drawAsLines)
+        glDrawArrays(GL_LINES, 0, numVertices);
+    else
+        glDrawArrays(GL_LINE_STRIP, 0, 121);
 
     // restore the previous program
     glUseProgram(pgm);
