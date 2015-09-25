@@ -17,7 +17,7 @@ GLint ModelView::ppuLoc_scaleTrans = -2;
 GLint ModelView::pvaLoc_mcPosition = -2;
 
 
-ModelView::ModelView(std::vector<float> coords, float colors[3])
+ModelView::ModelView(std::vector<float> coord, float colors[3])
 {
 	if (ModelView::shaderProgram == 0)
 	{
@@ -27,11 +27,11 @@ ModelView::ModelView(std::vector<float> coords, float colors[3])
 		fetchGLSLVariableLocations();
 	}
         drawColor[0] = colors[0]; drawColor[1] = colors[1]; drawColor[2] = colors[2];
-	vec2* c = new vec2[coords.size()];
+        vec2* c = new vec2[coord.size()];
 
 	// TODO: define and call method(s) to initialize your model and send data to GPU
 
-        xmin = 0.0; xmax = coords.size();
+        xmin = 0.0; xmax = coord.size();
         ymin = ymax = 0;
 
         for(int i = 0; i < 121; i++)
@@ -40,20 +40,60 @@ ModelView::ModelView(std::vector<float> coords, float colors[3])
 
             /* MONITOR MIN/MAX HERE */
 
-            if(coords[i] < ymin)
-                ymin = coords[i];
-            else if (coords[i] > ymax)
-                ymax = coords[i];
+            if(coord[i] < ymin)
+                ymin = coord[i];
+            else if (coord[i] > ymax)
+                ymax = coord[i];
 
-            c[i][1] = coords[i];
+            c[i][1] = coord[i];
 
         }
 
-        initModelGeometry(c, coords.size());
+        initModelGeometry(c, coord.size());
 	ModelView::numInstances++;
 
         delete[] c;
         std::cerr << "drawColor[0] = " << drawColor[0] << " | drawColor[1] = " << drawColor[1] << " | drawColor[2] = " << drawColor[2] << std::endl;
+}
+
+ModelView::ModelView(vec3 *coords, float colors[], int numVerts)
+{
+    if (ModelView::shaderProgram == 0)
+    {
+            // Create the common shader program:
+            ModelView::shaderIF = new ShaderIF("project1.vsh", "project1.fsh");
+            ModelView::shaderProgram = shaderIF->getShaderPgmID();
+            fetchGLSLVariableLocations();
+    }
+    drawColor[0] = colors[0]; drawColor[1] = colors[1]; drawColor[2] = colors[2];
+    vec2* c = new vec2[numVerts];
+
+    // TODO: define and call method(s) to initialize your model and send data to GPU
+
+    xmin = 0.0; xmax = numVerts;
+    ymin = ymax = 0;
+
+    for(int i = 0; i < numVerts; i++)
+    {
+        /* MONITOR MIN/MAX HERE */
+
+        if (coords[i][1] > ymax)
+            ymax = coords[i][1];
+        if (coords[i][0] > xmax)
+            xmax = coords[i][1];
+
+    }
+
+    xmax = xmax + 0.2;
+    ymax = ymax + 0.2;
+    xmin = xmin - 0.2;
+    ymin = ymin - 0.2;
+
+    initModelGeometry(c, numVerts);
+    ModelView::numInstances++;
+
+    delete[] c;
+    std::cerr << "drawColor[0] = " << drawColor[0] << " | drawColor[1] = " << drawColor[1] << " | drawColor[2] = " << drawColor[2] << std::endl;
 }
 
 void ModelView::initModelGeometry(vec2 *coords, int numVerts)
