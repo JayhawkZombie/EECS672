@@ -130,13 +130,13 @@ void ModelView::initModelGeometry(vec2 *coords, int numVerts)
 ModelView::~ModelView()
 {
 	// TODO: delete the vertex array objects and buffers here
-/*
+
     if (vao[0] > 0) // hasn't already been deleted
     {
             glDeleteBuffers(1, &vbo[0]);
             glDeleteVertexArrays(1, &vao[0]);
             vao[0] = vbo[0] = 0;
-    } */
+    }
 
 	if (--numInstances == 0)
 	{
