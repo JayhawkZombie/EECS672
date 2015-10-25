@@ -98,18 +98,6 @@ int main(int argc, char* argv[])
 
 	Stairs s(c, numOfStairs, stairStart, height, width, length, stairsColor);
 
-//GOES X, Y (up and down), Z, WIDTH, HEIGHT UPWARDs, THICKNESS, COLOR
-	/*
-	c.addModel(new Block(0, 	-300, 1000, 800, 	500, 	15, 	wallColor)); //Wall right next to stair (small wall)
-
-	c.addModel(new Block(0, 	-300, 0, 	1500, 	800, 	15, 	wallColor)); //Wall behind stairs to the right
-
-	c.addModel(new Block(0, 	-300, 0, 	1500, 	15, 	2000, 	wallColor)); //wall on bottom
-
-	c.addModel(new Block(0, 	 500, 0, 	1500, 	15, 	2000, 	wallColor)); //wall on top (ceiling)
-
-	c.addModel(new Block(-15, 	-300, 0,	15,		800,	2000,	wallColor)); //wall on left */
-
 
 	float wall1Attribs[6] 	= {0, 	-300, 0, 	1500, 	800, 	15};
 	float wall2Attribs[6] 	= {0, 	-300, 0, 	1500, 	15, 	2000};
