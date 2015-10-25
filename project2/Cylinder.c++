@@ -4,6 +4,8 @@
 cryph::AffVector dir;
 
 #define N_POINTS_AROUND_SLICE 20
+
+typedef float vec3[3];
 	
 Cylinder::Cylinder(float rad, const cryph::AffPoint& b, const cryph::AffPoint& t, float inColor[3])
 {
@@ -50,7 +52,6 @@ void Cylinder::defineCylinder()
 	double 	theta 	= 0.0;
 	double 	deltaTheta 	= 2.0 * M_PI / N_POINTS_AROUND_SLICE;
 	
-	typedef float vec3[3];
 	int 	nPoints = 2 * (N_POINTS_AROUND_SLICE + 1);
 	vec3* 	coords 	= new vec3[nPoints];
 	vec3* 	normals	= new vec3[nPoints];
@@ -91,7 +92,7 @@ void Cylinder::defineCylinder()
 		point.normalize();
 		
 		cryph::AffVector helperV = (b - CylinderBottom).cross(t - b);
-		bPerpendicular = helperV.cross(t-b);
+		bPerpendicular = helperV.cross(t - b);
 	
 	}
 
@@ -102,12 +103,12 @@ void Cylinder::defineCylinder()
 	glGenBuffers(2, vbo);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, nPoints*sizeof(vec3), coords, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, nPoints * sizeof(vec3), coords, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(pvaLoc_mcPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(pvaLoc_mcPosition);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, nPoints*sizeof(vec3), normals, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, nPoints * sizeof(vec3), normals, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(pvaLoc_mcNormal, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(pvaLoc_mcNormal);
 	
