@@ -5,6 +5,7 @@
 #include "Stairs.h"
 #include "Cylinder.h"
 #include "Desk.h"
+#include "Room.h"
 
 typedef float vec3[3];
 
@@ -23,7 +24,7 @@ void set3DViewingInformation(double xyz[6])
 	cryph::AffPoint center(xmid, ymid, zmid);
 
 	double maxDelta = xyz[1] - xyz[0];
-	double delta = xyz[3] - xyz[2];
+	double delta 	= xyz[3] - xyz[2];
 
 	if(delta > maxDelta)
 		maxDelta = delta;
@@ -58,13 +59,6 @@ void addWall(GLFWController &c, cryph::AffPoint bottomLeft, float height, float 
 	c.addModel(new Block(bottomLeft.x, bottomLeft.y - height, bottomLeft.z, width, height, thickness, color));
 } 
 
-void addGround(GLFWController &c, float height, bool onTopOfStairs, float color[3])
-{
-	if (!onTopOfStairs)
-		c.addModel(new Block(0, height, 		150, 1000, 	30, 1000, color));
-	else
-		c.addModel(new Block(0, height - 15, 	200, 400, 	15, 1000, color));
-} 
 
 int main(int argc, char* argv[])
 {
@@ -75,50 +69,59 @@ int main(int argc, char* argv[])
 
 	
 	float bottomLeftX = 230;
-	float height = 100;
-	float width = 100;
-	float length = 1000;
-
-	float groundColor[3] = {0, 0.15, 0.37};
-
-	float stairsColor[3] = {0.2, 0.75, 0.5};
-
-	int  numOfStairs = 5;
-
 	//Let's try to create a DESK
-	float desktopcolor[3] 	= {0.2, 0.2, 0.7};
-	float legsColor[3] 		= {0.5, 0.2, 0.2};
 
-	cryph::AffPoint bottomLeftPoint(0,-500,1130);
 
-	float deskHeight 	= 50;
-	float deskWidth 	= 500;
-	float deskLength 	= 500;
-	float legHeight 	= 200;
-	float legWidth 		= 100;
-
-	cryph::AffPoint deskPoint(0, 400, 2230);
+	cryph::AffPoint bottomLeftPoint(0,-500, 1130);
 
 	/* Using coordinates devised on paper */
+	int  	numOfStairs 	= 8;
+	float 	deskHeight 		= 50;
+	float 	deskWidth 		= 500;
+	float 	deskLength 		= 500;
+	float 	legHeight 		= 200;
+	float 	legWidth 		= 100;
+	float 	height 			= 100;
+	float 	width 			= 100;
+	float 	length 			= 1000;
+	float 	wallColor[3] 	= {0.5, 0.5, 0.5};
+	float 	groundColor[3] 	= {0, 0.15, 0.37};
+	float 	stairsColor[3] 	= {0.2, 0.75, 0.5};
+	float 	desktopcolor[3] = {0.2, 0.2, 0.7};
+	float 	legsColor[3] 	= {0.5, 0.2, 0.2};
 
-	cryph::AffPoint origin(-300, 0, -300);
+	cryph::AffPoint origin		(-300, 0, -300);
 
-	cryph::AffPoint stairStart(3RT00, 100, 0);
-	//float stairsColor[3] = {0.21, 0.23, 0.87};
-	float wallColor[3] = {0.5, 0.5, 0.5};
+	cryph::AffPoint stairStart	(0, 400, 0);
+
+
 
 	Stairs s(c, numOfStairs, stairStart, height, width, length, stairsColor);
 
-//GOES X, Y, Z, WIDTH, HEIGHT UPWARDs, THICKNESS, COLOR
-	c.addModel(new Block(0, -300, 1000, 800, 	500, 	15, 	wallColor));
+//GOES X, Y (up and down), Z, WIDTH, HEIGHT UPWARDs, THICKNESS, COLOR
+	/*
+	c.addModel(new Block(0, 	-300, 1000, 800, 	500, 	15, 	wallColor)); //Wall right next to stair (small wall)
 
-	c.addModel(new Block(0, -300, 0, 	1500, 	15, 	2000, 	wallColor));
+	c.addModel(new Block(0, 	-300, 0, 	1500, 	800, 	15, 	wallColor)); //Wall behind stairs to the right
 
-	c.addModel(new Block(-15, -300, 0,	15,		800,	2000,	wallColor));
+	c.addModel(new Block(0, 	-300, 0, 	1500, 	15, 	2000, 	wallColor)); //wall on bottom
+
+	c.addModel(new Block(0, 	 500, 0, 	1500, 	15, 	2000, 	wallColor)); //wall on top (ceiling)
+
+	c.addModel(new Block(-15, 	-300, 0,	15,		800,	2000,	wallColor)); //wall on left */
+
+
+	float wall1Attribs[6] 	= {0, 	-300, 0, 	1500, 	800, 	15};
+	float wall2Attribs[6] 	= {0, 	-300, 0, 	1500, 	15, 	2000};
+	float floorAttribs[6]	= {0, 	 500, 0, 	1500, 	15, 	2000};
+	float ceilingAttribs[6] = {-15, -300, 0,	15,		800,	2000};
 
 	cryph::AffPoint deskCoord(0, -300, 1200);
 
 	Desk d(c, deskCoord, deskWidth, deskLength, deskHeight, legHeight, legWidth, desktopcolor, legsColor);
+	Room r(c, wall1Attribs, wallColor, wall2Attribs, wallColor, ceilingAttribs, wallColor, floorAttribs, wallColor);
+
+	c.addModel(new Block(0, 	-300, 1000, 800, 	500, 	15, 	wallColor)); //Wall right next to stair (small wall)
 
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
