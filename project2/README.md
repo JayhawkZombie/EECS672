@@ -1,3 +1,5 @@
 #####Create a simple, "realistic 3D scene"
 
-http://i.imgur.com/vHiulZG.png
+![Image of Result](http://i.imgur.com/vHiulZG.png)
+
+
