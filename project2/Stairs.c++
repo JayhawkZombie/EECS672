@@ -1,15 +1,29 @@
-// Stairs.c++
-
 #include "Stairs.h"
 #include "ShaderIF.h"
 
-Stairs::Stairs(GLFWController &c, int numSteps, cryph::AffPoint bottomLeftCorner, float height, float width, float length)
+Stairs::Stairs(GLFWController &c, int numSteps, cryph::AffPoint bottomLeftCorner, float height, float width, float length, float color[3])
 {
+	stairHeight = height;
+	stairLength = length;
+	stairWidth 	= width;
 	//steps.reserve(numSteps);
 	for(int i = 0; i < numSteps; i++)
 	{
-		c.addModel(new Block(bottomLeftCorner.x + i * width, bottomLeftCorner.y - i * height,	bottomLeftCorner.z, 	width, height, length));
+		c.addModel(new Block(bottomLeftCorner.x + i * width, bottomLeftCorner.y - i * height,	bottomLeftCorner.z, 	width, height, length, color));
 	}
+}
+
+float Stairs::getStairWidth()
+{
+	return stairWidth;
+}
+float Stairs::getStairHeight()
+{
+	return stairHeight;
+}
+float Stairs::getStairLength()
+{
+	return stairLength;
 }
 
 Stairs::~Stairs()
