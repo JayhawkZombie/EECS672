@@ -2,6 +2,7 @@
 
 #include "GLFWController.h"
 #include "Block.h"
+#include "Stairs.h"
 
 typedef float vec3[3];
 
@@ -30,7 +31,7 @@ void set3DViewingInformation(double xyz[6])
 
 	double distEyeCenter = 2.0 * maxDelta;
 
-	cryph::AffPoint eye(xmid + 700, ymid + 150, zmid + 0.75*distEyeCenter);
+	cryph::AffPoint eye(xmid + 900, ymid + 250, zmid + 0.75*distEyeCenter);
 
 	cryph::AffVector up = cryph::AffVector::yu;
 
@@ -45,11 +46,11 @@ void set3DViewingInformation(double xyz[6])
 	// Set values for ecZpp, ecZmin, ecZmax that make sense in the context of
 	// the EC system established above, then:
 
-	ModelView::setProjection(ORTHOGONAL);
+	ModelView::setProjection(PERSPECTIVE);
 	ModelView::setProjectionPlaneZ(ecZpp);
 	ModelView::setECZminZmax(ecZmin, ecZmax);
 }
-
+/*
 void addStairs(GLFWController &c, cryph::AffPoint bottomLeftCorner, float length, float height, float width, int numStairs)
 {
 
@@ -58,7 +59,7 @@ void addStairs(GLFWController &c, cryph::AffPoint bottomLeftCorner, float length
 		c.addModel(new Block(bottomLeftCorner.x + i * width, bottomLeftCorner.y - i * height,	bottomLeftCorner.z, 	width, height, length));
 	}
 
-}
+} */
 
 void addWall(GLFWController &c, cryph::AffPoint bottomLeft, float height, float width, float thickness)
 {
@@ -91,18 +92,24 @@ int main(int argc, char* argv[])
 	cryph::AffPoint bottomLeftCornerWall1(230, 0, 130);
 	cryph::AffPoint bottomLeftCornerWall2(30, 0, 1130); */
 
+	//Rotate to see different angles arounf the stairs - bleh, looks like crap, but it's a start
+
 	cryph::AffPoint bottomLeftCorner(0, -130, 130);
 	cryph::AffPoint bottomLeftCorner2(0, -30, 130);
 	cryph::AffPoint bottomLeftCornerWall1(0, 0, 130);
 	cryph::AffPoint bottomLeftCornerWall2(-200, 0, 1130);
 
 
-	addStairs(c, bottomLeftCorner, length, height, width, 5);
+	//addStairs(c, bottomLeftCorner, length, height, width, 5);
 	//addStairs(c, bottomLeftCorner2, length, height, width, 5);
-	addGround(c, -545);
+	//addGround(c, -545);
 	//addGround(c, 0, true);
 	addWall(c, bottomLeftCornerWall1, 600, 600, 15);
 	addWall(c, bottomLeftCornerWall2, 600, 600, 15);
+
+	//OH MY GOD ----- IT FREAKING WORKS!
+	//It's a little weird to do it this way.... but it works!!!!!!
+	Stairs s(c, 5, bottomLeftCorner, height, width, length);
 
 
 
