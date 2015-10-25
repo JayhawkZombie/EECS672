@@ -34,7 +34,7 @@ void set3DViewingInformation(double xyz[6])
 
 	double distEyeCenter = 2.0 * maxDelta;
 
-	cryph::AffPoint eye(xmid + 1200, ymid + 250, zmid + 0.75*distEyeCenter);
+	cryph::AffPoint eye(xmid + 1200, ymid + 350, zmid + 0.75*distEyeCenter);
 
 	cryph::AffVector up = cryph::AffVector::yu;
 
@@ -62,7 +62,7 @@ void addWall(GLFWController &c, cryph::AffPoint bottomLeft, float height, float 
 
 int main(int argc, char* argv[])
 {
-	GLFWController c("FUCK THIS", MVC_USE_DEPTH_BIT);
+	GLFWController c("Room with stairs and a desk", MVC_USE_DEPTH_BIT);
 	c.reportVersions(std::cout);
 
 	// create your scene, adding things to the Controller....
