@@ -204,7 +204,7 @@ int main(int argc, char* argv[])
 	pyramidPts3[0] = 500.0f;	pyramidPts3[1] = 0.0f; pyramidPts3[2] = 1500.0f;
 	pyramidPts4[0] = 500.0f;	pyramidPts4[1] = 0.0f; pyramidPts4[2] = 1000.0f;
 
-	c.addModel(new Pyramid(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, -500.0f, triforceColor));
+	c.addModel(new Pyramid(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, 500.0f, triforceColor));
 
 	addTriforce(c, B1, B2, B3, wedgeThickness, wedgeHeight, wedgeWidth, triforceColor);
 
