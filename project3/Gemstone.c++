@@ -88,14 +88,14 @@ void Gemstone::defineGemstone()
 	}
 
 	zmax *= 1.2; //there seems to be some strange clipping if I don't adjust this here...
-
+/*
 	std::cerr << "Bounds: " << std::endl;
 	std::cerr << "xmin: " << xmin << std::endl;
 	std::cerr << "xmax: " << xmax << std::endl;
 	std::cerr << "ymin: " << ymin << std::endl;
 	std::cerr << "ymax: " << ymax << std::endl;
 	std::cerr << "zmin: " << zmin << std::endl;
-	std::cerr << "zmax: " << zmax << std::endl;
+	std::cerr << "zmax: " << zmax << std::endl; */
 
 	//Since we can only draw one face with glDrawArrays, we'll just put them into the VBO in order
 	vec3 verts[] = {
@@ -104,14 +104,14 @@ void Gemstone::defineGemstone()
 		{points[4].x, points[4].y, points[4].z}, {points[5].x, points[5].y, points[5].z}
 	};
 
-
+/*
 	std::cerr << "Points: " << std::endl;
 	std::cerr << "B1: ( " << points[0].x << ", " << points[0].y << " , " << points[0].z << ") " << std::endl;
 	std::cerr << "B2: ( " << points[1].x << ", " << points[1].y << " , " << points[1].z << ") " << std::endl;
 	std::cerr << "B3: ( " << points[2].x << ", " << points[2].y << " , " << points[2].z << ") " << std::endl;
 	std::cerr << "B4: ( " << points[3].x << ", " << points[3].y << " , " << points[3].z << ") " << std::endl;
 	std::cerr << "T : ( " << points[4].x << ", " << points[4].y << " , " << points[4].z << ") " << std::endl;
-	std::cerr << "B : ( " << points[5].x << ", " << points[5].y << " , " << points[5].z << ") " << std::endl;
+	std::cerr << "B : ( " << points[5].x << ", " << points[5].y << " , " << points[5].z << ") " << std::endl; */
 
 	//And now comes the fun part - making the normal vectors
 
