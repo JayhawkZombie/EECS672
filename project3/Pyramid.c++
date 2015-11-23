@@ -107,13 +107,13 @@ void Pyramid::definePyramid()
 		{points[1].x, points[1].y, points[1].z}, {points[2].x, points[2].y, points[2].z},
 		{points[4].x, points[4].y, points[4].z}
 	};
-
+/*
 	std::cerr << "Points: " << std::endl;
 	std::cerr << "B1: ( " << points[0].x << ", " << points[0].y << " , " << points[0].z << ") " << std::endl;
 	std::cerr << "B2: ( " << points[1].x << ", " << points[1].y << " , " << points[1].z << ") " << std::endl;
 	std::cerr << "B3: ( " << points[2].x << ", " << points[2].y << " , " << points[2].z << ") " << std::endl;
 	std::cerr << "B4: ( " << points[3].x << ", " << points[3].y << " , " << points[3].z << ") " << std::endl;
-	std::cerr << "T : ( " << points[4].x << ", " << points[4].y << " , " << points[4].z << ") " << std::endl;
+	std::cerr << "T : ( " << points[4].x << ", " << points[4].y << " , " << points[4].z << ") " << std::endl; */
 
 	//Now let's calculate our normal vectors
 	//They will be defined as such: BOTTOM, S1, S2, S3, S4
