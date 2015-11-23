@@ -9,6 +9,8 @@
 #include "Room.h"
 #include "Wedge.h"
 #include "Pyramid.h"
+#include "Gemstone.h"
+#include "Rupee.h"
 
 typedef float vec3[3];
 
@@ -39,8 +41,8 @@ void set3DViewingInformation(double xyz[6])
 	float height = xyz[3] - xyz[2];
 	float depth = xyz[5] - xyz[4];
 
-	float pd = sqrt(height * height + width * width);
-	float d = sqrt(pd * pd + depth * depth);
+	//float pd = sqrt(height * height + width * width);
+	float d = sqrt(height * height + width * width + depth * depth);
 
 	float r = d / 2;
 
@@ -59,7 +61,7 @@ void set3DViewingInformation(double xyz[6])
 	double zpp, zmin, zmax;
 	zmin = - (distEyeCenter + r);
 	zmax = zmin + d;
-	zpp = zmax;
+	zpp = 0.85 * zmax;
 
 	ecZpp 	= -(distEyeCenter - 0.5 * maxDelta);
 	ecZmin 	= ecZpp - maxDelta * 2.0;
@@ -115,16 +117,13 @@ void addTriforce(CustomGLFWController &c, cryph::AffPoint B1, cryph::AffPoint B2
 	wedge3_1[0] = wedge3_pt1.x; wedge3_1[1] = wedge3_pt1.y; wedge3_1[2] = wedge3_pt1.z;
 	wedge3_2[0] = wedge3_pt2.x; wedge3_2[1] = wedge3_pt2.y; wedge3_2[2] = wedge3_pt2.z;
 	wedge3_3[0] = wedge3_pt3.x; wedge3_3[1] = wedge3_pt3.y; wedge3_3[2] = wedge3_pt3.z;
-/*
-	wedge2Pts1[0] = wedgePts1[0] + (wedgePts1[2] - wedgePts1[1]); wedge2Pts1[1] = 0.0f; wedge2Pts1[2] = -1200.0f;
-	wedge2Pts2[0] = 0.0f; wedge2Pts2[1] = 0.0f; wedge2Pts2[2] = 0.0f;
-	wedge2Pts3[0] = 0.0f; wedge2Pts3[1] = 0.0f; wedge2Pts3[2] = -1200.0f; */
-
-	//c.addModel(new Wedge(wedgePts1, wedgePts2, wedgePts3, 500.0f, legsColor));
 
 	c.addModel(new Wedge(wedge1_1, wedge1_2, wedge1_3, -wedgeThickness, color));
 	c.addModel(new Wedge(wedge2_1, wedge2_2, wedge2_3, wedgeThickness, color));
 	c.addModel(new Wedge(wedge3_1, wedge3_2, wedge3_3, wedgeThickness, color));
+
+	std::cerr << "Center of triforce = " << wedge2_pt2.x << wedge2_pt2.y <<  wedge2_pt2.z << std::endl;
+
 }
 
 
@@ -163,9 +162,17 @@ int main(int argc, char* argv[])
 
 	cryph::AffPoint stairStart	(0, 400, 0);
 
+	float ruby[3] 	= { 255.0f / 255 , 	0.0f, 			0.0f };
+	float gold[3] 	= { 255.0f / 255, 	217.0f / 255, 	0 };
+	float green[3] 	= { 6.0f / 255.0f, 	173.0f / 255, 	0 };
+	float purple[3] = { 127.0f / 255, 	0.0f / 255, 	173.0f / 255 };
+	float orange[3] = { 255.0f / 255, 	128.0f / 255, 	0.0f };
+	float blue[3] 	= { 0.0f, 			30.0f / 255, 	255.0f / 255 };
+	float grey[3] 	= { 163.0f / 255, 	163.0f / 255, 	163.0f / 255 };
 
 
-	Stairs s(c, numOfStairs, stairStart, height, width, length, stairsColor);
+
+	//Stairs s(c, numOfStairs, stairStart, height, width, length, stairsColor);
 
 
 	float wall1Attribs[6] 	= {0, 	-300, 0, 	1500, 	800, 	15};
@@ -176,19 +183,19 @@ int main(int argc, char* argv[])
 	cryph::AffPoint deskCoord(0, -300, 1200);
 	float triforceColor[3] = {255 / 255.0f, 251 / 255.0f, 0 / 255.0f };
 
-	Desk d(c, deskCoord, deskWidth, deskLength, deskHeight, legHeight, legWidth, desktopcolor, legsColor);
-	Room r(c, wall1Attribs, wallColor, wall2Attribs, wallColor, ceilingAttribs, wallColor, floorAttribs, wallColor);
+	//Desk d(c, deskCoord, deskWidth, deskLength, deskHeight, legHeight, legWidth, desktopcolor, legsColor);
+	//Room r(c, wall1Attribs, wallColor, wall2Attribs, wallColor, ceilingAttribs, wallColor, floorAttribs, wallColor);
 
-	float wedgeWidth = 400.0f;
-	float wedgeHeight = 600.0f;
-	float wedgeThickness = 100.0f;
+	float wedgeWidth = 100.0f;
+	float wedgeHeight = 150.0f;
+	float wedgeThickness = 50.0f;
 
 	float wedgePts1[3];
 	float wedgePts2[3];
 	float wedgePts3[3];
-	wedgePts1[0] = 0.0f; wedgePts1[1] = 0.0f; wedgePts1[2] = 0.0f - 500.0f;
-	wedgePts2[0] = 0.0f; wedgePts2[1] = wedgeHeight; wedgePts2[2] = -wedgeWidth - 500.0f;
-	wedgePts3[0] = 0.0f; wedgePts3[1] = 0.0f; wedgePts3[2] = -2 * wedgeWidth - 500.0f;
+	wedgePts1[0] = 0.0f; wedgePts1[1] = 0.0f; wedgePts1[2] = 0.0f;
+	wedgePts2[0] = 0.0f; wedgePts2[1] = wedgeHeight; wedgePts2[2] = -wedgeWidth;
+	wedgePts3[0] = 0.0f; wedgePts3[1] = 0.0f; wedgePts3[2] = -2 * wedgeWidth;
 
 	cryph::AffPoint B1(wedgePts2);
 	cryph::AffPoint B2(wedgePts1);
@@ -199,16 +206,37 @@ int main(int argc, char* argv[])
 	float pyramidPts3[3];
 	float pyramidPts4[3];
 
-	pyramidPts1[0] = 0.0f;	pyramidPts1[1] = 0.0f;	pyramidPts1[2] = 1000.0f;
-	pyramidPts2[0] = 0.0f;	pyramidPts2[1] = 0.0f;	pyramidPts2[2] = 1500.0f;
-	pyramidPts3[0] = 500.0f;	pyramidPts3[1] = 0.0f; pyramidPts3[2] = 1500.0f;
-	pyramidPts4[0] = 500.0f;	pyramidPts4[1] = 0.0f; pyramidPts4[2] = 1000.0f;
+	pyramidPts1[0] = -75.0f;	pyramidPts1[1] = -300.0f;	pyramidPts1[2] = -wedgeWidth * 2;
+	pyramidPts2[0] = -75.0f;	pyramidPts2[1] = -300.0f;	pyramidPts2[2] = 200.0f - wedgeWidth * 2;
+	pyramidPts3[0] = 125.0f;	pyramidPts3[1] = -300.0f; pyramidPts3[2] = 200.0f - wedgeWidth * 2;
+	pyramidPts4[0] = 125.0f;	pyramidPts4[1] = -300.0f; pyramidPts4[2] = -wedgeWidth * 2;
 
-	c.addModel(new Pyramid(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, 500.0f, triforceColor));
+	c.addModel(new Pyramid(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, 150.0f, grey));
 
-	addTriforce(c, B1, B2, B3, wedgeThickness, wedgeHeight, wedgeWidth, triforceColor);
+	pyramidPts1[0] = 500.0f;	pyramidPts1[1] = 0.0f;	pyramidPts1[2] = 1000.0f;
+	pyramidPts2[0] = 500.0f;	pyramidPts2[1] = 0.0f;	pyramidPts2[2] = 1500.0f;
+	pyramidPts3[0] = 1000.0f;	pyramidPts3[1] = 0.0f; pyramidPts3[2] = 1500.0f;
+	pyramidPts4[0] = 1000.0f;	pyramidPts4[1] = 0.0f; pyramidPts4[2] = 1000.0f;
 
-	c.addModel(new Block(0, -300, 1000, 800, 500, 15, wallColor)); //Wall right next to stair (small wall)
+	//c.addModel(new Gemstone(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, 500.0f, triforceColor));
+
+	pyramidPts1[0] = 0.0f;	pyramidPts1[1] = 0.0f;		pyramidPts1[2] = 100.0f;
+	pyramidPts2[0] = 0.0f;	pyramidPts2[1] = 100.0f;	pyramidPts2[2] = 100.0f;
+	pyramidPts3[0] = 0.0f;	pyramidPts3[1] = 100.0f; 	pyramidPts3[2] = 200.0f;
+	pyramidPts4[0] = 0.0f;	pyramidPts4[1] = 0.0f; 		pyramidPts4[2] = 200.0f;
+
+	c.addModel(new Rupee(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, ruby));
+
+	addTriforce(c, B1, B2, B3, wedgeThickness, wedgeHeight, wedgeWidth, gold);
+
+	//c.addModel(new Block(0, -300, 1000, 800, 500, 15, wallColor)); //Wall right next to stair (small wall)
+
+	wedgePts1[0] = 400.0f; wedgePts1[1] = 700.0f; 	wedgePts1[2] = 150.0f - 500.0f;
+	wedgePts2[0] = 400.0f; wedgePts2[1] = 1200.0f;	wedgePts2[2] = 400.0f - 500.0f;
+	wedgePts3[0] = 400.0f; wedgePts3[1] = 700.0f; 	wedgePts3[2] = 650.0f - 500.0f;
+
+	c.addModel(new Block(400.0, -2 * wedgeHeight, -625.0, 1000, 1000, 1000, wallColor));
+	c.addModel(new Wedge(wedgePts1, wedgePts2, wedgePts3, -1000, blue));
 
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
