@@ -8,6 +8,7 @@
 #include "ShaderIF.h"
 
 typedef float vec3[3];
+typedef float vec4[4];
 
 // index lists for the three faces that can't be drawn with glDrawArrays
 // there are 3 faces that we cant draw
@@ -18,6 +19,11 @@ GLuint Wedge::indexList[2][3] = {
 GLuint Wedge::indexforBottomFace[1][4] = {
 	{0, 1, 4, 5}
 };
+
+vec3 Wedge::ka = {0.24725, 0.2245, 0.0645};
+vec3 Wedge::kd = {0.34615, 0.3143, 0.0903};
+vec3 Wedge::ks = {0.797357, 0.723991, 0.208006};
+float Wedge::m = 12.8;
 
 Wedge::Wedge(float P1[3], float P2[3], float P3[3], float de,  float c[]) :
 	displayWedgeEdges(false), displayWedgeFill(true)
@@ -87,25 +93,30 @@ void Wedge::defineWedge()
 
 	//normal for front face = -backVector
 	normals[0] = -backVector;
+	normals[0].normalize();
 
 	//normal for back face = backVector
 	normals[4] = backVector;
+	normals[4].normalize();
 
 	//normal for bottom face = (B2 - F2) cross (F1 - F2)
 	cryph::AffVector pt4normal1, pt4normal2;
 	pt4normal1 = (points[5] - points[2]);
 	pt4normal2 = (points[0] - points[2]);
 	normals[3] = pt4normal1.cross(pt4normal2);
+	normals[3].normalize();
 
 	//normal for left face = (F3 - F1) cross (F3 - B3)
 	pt4normal1 = (points[1] - points[0]);
 	pt4normal2 = (points[1] - points[4]);
 	normals[1] = pt4normal1.cross(pt4normal2);
+	normals[1].normalize();
 
 	//normal for right face = (F2 - F3) cross (F2 - B2)
 	pt4normal1 = (points[2] - points[1]);
 	pt4normal2 = (points[2] - points[5]);
 	normals[2] = pt4normal1.cross(pt4normal2);
+	normals[2].normalize();
 
 	//hmm, so we need to find xmin, xmax, ymin, ymax, zmin, zmax
 	xmin = xmax = ymin = ymax = zmin = zmax = 0.0f;
@@ -215,6 +226,8 @@ void Wedge::render()
 	float mat[16];
 	glUniformMatrix4fv(ppuLoc_mc_ec, 1, false, mc_ec.extractColMajor(mat));
 	glUniformMatrix4fv(ppuLoc_ec_lds, 1, false, ec_lds.extractColMajor(mat));
+
+	ModelViewWithPhongLighting::sendToGPU(Wedge::ka, Wedge::kd, Wedge::ks, Wedge::m);
 
 	float black[] = { 0.0, 0.0, 0.0 };
 	float bColor[] = { 1.0, 0.0, 1.0 };
