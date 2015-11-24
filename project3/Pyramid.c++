@@ -29,6 +29,11 @@ GLuint Pyramid::indexList[3][3] = {
 	{0, 2, 4}, {0, 1, 4}, {1, 3, 4}
 };
 
+vec3 Pyramid::ka = { 0.135, 0.2225, 0.1575 };
+vec3 Pyramid::kd = {0.54, 0.89, 0.63};
+vec3 Pyramid::ks = {0.316228, 0.316228, 0.316228};
+float Pyramid::m = 12.8;
+
 Pyramid::Pyramid(float P1[3], float P2[3], float P3[3], float P4[3], float he, float c[]) :
 	displayPyramidEdges(false), displayPyramidFill(true)
 {
@@ -235,6 +240,8 @@ void Pyramid::render()
 	float mat[16];
 	glUniformMatrix4fv(ppuLoc_mc_ec, 1, false, mc_ec.extractColMajor(mat));
 	glUniformMatrix4fv(ppuLoc_ec_lds, 1, false, ec_lds.extractColMajor(mat));
+
+	ModelViewWithPhongLighting::sendToGPU(Pyramid::ka, Pyramid::kd, Pyramid::ks, Pyramid::m);
 
 	float black[] = { 0.0, 0.0, 0.0 };
 	float bColor[] = { 1.0, 0.0, 1.0 };
