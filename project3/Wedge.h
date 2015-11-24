@@ -8,6 +8,7 @@
 #include "ModelViewWithPhongLighting.h"
 
 typedef float vec3[3];
+typedef float vec4[4];
 
 class Wedge : public ModelViewWithPhongLighting
 {
@@ -27,6 +28,11 @@ public:
 	void getMCBoundingBox(double* xyzLimits) const;
 	void handleCommand(unsigned char key, double ldsX, double ldsY);
 	void render();
+
+	static vec3 ka;
+	static vec3 ks;
+	static vec3 kd;
+	static float m;
 
 private:
 	GLuint vao[1];
