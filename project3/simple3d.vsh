@@ -125,6 +125,7 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 		}
 
 		//Convert to eye coordinates
+		//If I don't do this, it looks like garbage
 		ecLi = (mc_ec * vec4(ecLi, 0.0)).xyz;
 
 		ecLi = normalize(ecLi);
