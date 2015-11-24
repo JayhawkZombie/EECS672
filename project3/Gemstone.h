@@ -28,6 +28,11 @@ public:
 	void handleCommand(unsigned char key, double ldsX, double ldsY);
 	void render();
 
+	static vec3 ka;
+	static vec3 kd;
+	static vec3 ks;
+	static float m;
+
 private:
 	GLuint vao[1];
 	GLuint vbo[1];
