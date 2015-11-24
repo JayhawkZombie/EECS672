@@ -11,6 +11,7 @@
 #include "Pyramid.h"
 #include "Gemstone.h"
 #include "Rupee.h"
+#include "Cone.h"
 
 typedef float vec3[3];
 
@@ -42,7 +43,7 @@ void set3DViewingInformation(double xyz[6])
 	float depth = xyz[5] - xyz[4];
 
 	//float pd = sqrt(height * height + width * width);
-	float d = sqrt(height * height + width * width + depth * depth);
+	float d = 1.5 * sqrt(height * height + width * width + depth * depth);
 
 	float r = d / 2;
 
@@ -213,17 +214,17 @@ int main(int argc, char* argv[])
 
 	c.addModel(new Pyramid(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, 150.0f, grey));
 
-	pyramidPts1[0] = 500.0f;	pyramidPts1[1] = 0.0f;	pyramidPts1[2] = 1000.0f;
-	pyramidPts2[0] = 500.0f;	pyramidPts2[1] = 0.0f;	pyramidPts2[2] = 1500.0f;
-	pyramidPts3[0] = 1000.0f;	pyramidPts3[1] = 0.0f; pyramidPts3[2] = 1500.0f;
-	pyramidPts4[0] = 1000.0f;	pyramidPts4[1] = 0.0f; pyramidPts4[2] = 1000.0f;
+	pyramidPts1[0] = 500.0f / 2;	pyramidPts1[1] = 0.0f;	pyramidPts1[2] = 1000.0f / 2;
+	pyramidPts2[0] = 500.0f / 2;	pyramidPts2[1] = 0.0f;	pyramidPts2[2] = 1500.0f / 2;
+	pyramidPts3[0] = 1000.0f / 2;	pyramidPts3[1] = 0.0f; pyramidPts3[2] = 1500.0f / 2;
+	pyramidPts4[0] = 1000.0f / 2;	pyramidPts4[1] = 0.0f; pyramidPts4[2] = 1000.0f / 2;
 
-	//c.addModel(new Gemstone(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, 500.0f, triforceColor));
+	c.addModel(new Gemstone(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, 500.0f / 2, green));
 
 	pyramidPts1[0] = 0.0f;	pyramidPts1[1] = 0.0f;		pyramidPts1[2] = 100.0f;
-	pyramidPts2[0] = 0.0f;	pyramidPts2[1] = 100.0f;	pyramidPts2[2] = 100.0f;
-	pyramidPts3[0] = 0.0f;	pyramidPts3[1] = 100.0f; 	pyramidPts3[2] = 200.0f;
-	pyramidPts4[0] = 0.0f;	pyramidPts4[1] = 0.0f; 		pyramidPts4[2] = 200.0f;
+	pyramidPts2[0] = 0.0f;	pyramidPts2[1] = 150.0f;	pyramidPts2[2] = 100.0f;
+	pyramidPts3[0] = 0.0f;	pyramidPts3[1] = 150.0f; 	pyramidPts3[2] = 250.0f;
+	pyramidPts4[0] = 0.0f;	pyramidPts4[1] = 0.0f; 		pyramidPts4[2] = 250.0f;
 
 	c.addModel(new Rupee(pyramidPts1, pyramidPts2, pyramidPts3, pyramidPts4, ruby));
 
@@ -236,9 +237,21 @@ int main(int argc, char* argv[])
 	wedgePts3[0] = 400.0f; wedgePts3[1] = 700.0f; 	wedgePts3[2] = 650.0f - 500.0f;
 
 	c.addModel(new Block(400.0, -2 * wedgeHeight, -625.0, 1000, 1000, 1000, wallColor));
-	c.addModel(new Wedge(wedgePts1, wedgePts2, wedgePts3, -1000, blue));
+	//c.addModel(new Wedge(wedgePts1, wedgePts2, wedgePts3, -1000, blue));
 
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	float conet[3];
+	conet[0] = 0;
+	conet[1] = 500.0f;
+	conet[2] = 1000.0f;
+
+	float coneb[3];
+	coneb[0] = 0;
+	coneb[1] = 0;
+	coneb[2] = 1000.0f;
+	cryph::AffPoint coneTop(conet);
+	cryph::AffPoint coneBottom(coneb);
+
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 
 
 	double xyz[6];
