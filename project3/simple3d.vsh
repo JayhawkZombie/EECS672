@@ -116,12 +116,15 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 				//Orthogonal
 				ecLi = vec3(0.0, 0.0, 1.0);
 			}
+
+			ecLi = vec3(0.0, 0.0, 1.0);
 		}
 		
 		//If it's not directional, then find the vector from the point to the light source
 		else
 		{
 			ecLi = vec3(sources[i].xyz - ec_Q);
+			//ecLi = -vec3(ec_Q);
 		}
 
 		//Convert to eye coordinates
@@ -143,7 +146,14 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 			//Need to get ri - angle of incidence = angle of reflection
 			vec3 ri = vec3(0.0, 0.0, 0.0);
 			//reflect(ri, ecLi);
-			ri = normalize(reflect(ecLi, ec_nHat));
+			/*
+			I - 2.0 * dot(N, I) * N
+			*/
+			ri = normalize((ecLi - 2.0 * dot(ec_nHat, ecLi)) * ec_nHat);
+			//ri = dot(ri, ec_nHat);
+			//ri = ri * 2.0;
+			//ri = ecLi - ri;
+			//ri = normalize(reflect(ecLi, ec_nHat));
 
 			if (dot(ec_nHat, ec_v) < 0)
 			{
@@ -166,7 +176,8 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 					//there is something wrong with this equation right here
 					//Commenting this out removes the "invalid operation error - damn it
 
-					//Iq += ks * strengths[i]; // * pow(dot(ri, ec_v), m);\
+					//Iq += ks * strengths[i]; // * pow(dot(ri, ec_v), m);
+					//It apparently can't find ks and m...BUT THEY'RE RIGHT HERE!!!
 					Iq += ks * pow(dot(ri, ec_v), m) * strengths[i];
 				}
 				
@@ -193,6 +204,15 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 		Iq.z = Iq.z / maxLightValue;
 	}
 
+	//This is just for debugging purposes - will remove
+	if (false)
+	{
+		//Iq = vec3(0.0, 0.0, 0.0) + ka * strengths[i];
+
+		float factor = abs(dot(normalize(p_ecLightSource.xyz), ec_nHat));
+
+		Iq = factor * kd;
+	}
 
 	//float factor = abs(dot(normalize(p_ecLightSource.xyz), ec_nHat));
 
