@@ -17,6 +17,11 @@ typedef float vec3[3];
 | B  - points[5]
 */
 
+vec3 Gemstone::ka = { 0.135, 0.2225, 0.1575 };
+vec3 Gemstone::kd = {0.54, 0.89, 0.63};
+vec3 Gemstone::ks = {0.316228, 0.316228, 0.316228};
+float Gemstone::m = 12.8;
+
 GLuint Gemstone::indexList[7][3] = {
 	{0, 1, 4} /* S1 */, {0, 3, 4} /* S2 */,
 	{2, 1, 4} /* S4 */, {0, 1, 5} /* S5 */,
@@ -251,6 +256,8 @@ void Gemstone::render()
 	float mat[16];
 	glUniformMatrix4fv(ppuLoc_mc_ec, 1, false, mc_ec.extractColMajor(mat));
 	glUniformMatrix4fv(ppuLoc_ec_lds, 1, false, ec_lds.extractColMajor(mat));
+
+	ModelViewWithPhongLighting::sendToGPU(Gemstone::ka, Gemstone::kd, Gemstone::ks, Gemstone::m);
 
 	float black[] = { 0.0, 0.0, 0.0 };
 	float bColor[] = { 1.0, 0.0, 1.0 };
