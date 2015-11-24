@@ -28,9 +28,9 @@ GLuint Rupee::indexList[12][3] = {
 	{2, 3, 7} /* S11 */, {4, 2, 7} /* S12 */
 };
 
-vec4 Rupee::ka = { 0.1745, 0.01175, 0.01175};
-vec4 Rupee::kd = { 0.61424, 0.04136, 0.04136};
-vec4 Rupee::ks = { 0.727811, 0.626959, 0.626959};
+vec3 Rupee::ka = { 0.1745, 0.01175, 0.01175};
+vec3 Rupee::kd = { 0.61424, 0.04136, 0.04136};
+vec3 Rupee::ks = { 0.727811, 0.626959, 0.626959};
 float Rupee::m = 76.8;
 
 Rupee::Rupee(float P1[3], float P2[3], float P3[3], float P4[3], float c[]) :
@@ -311,7 +311,7 @@ void Rupee::render()
 	glUniformMatrix4fv(ppuLoc_mc_ec, 1, false, mc_ec.extractColMajor(mat));
 	glUniformMatrix4fv(ppuLoc_ec_lds, 1, false, ec_lds.extractColMajor(mat));
 
-	//ModelViewWithPhongLighting::sendToGPU(ka, kd, ks, m);
+	ModelViewWithPhongLighting::sendToGPU(Rupee::ka, Rupee::kd, Rupee::ks, Rupee::m);
 
 	float black[] = { 0.0, 0.0, 0.0 };
 	float bColor[] = { 1.0, 0.0, 1.0 };
