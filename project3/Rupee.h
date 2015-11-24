@@ -31,9 +31,9 @@ public:
 	void handleCommand(unsigned char key, double ldsX, double ldsY);
 	void render();
 
-	static vec4 ka;
-	static vec4 kd;
-	static vec4 ks;
+	static vec3 ka;
+	static vec3 kd;
+	static vec3 ks;
 	static float m;
 
 private:
