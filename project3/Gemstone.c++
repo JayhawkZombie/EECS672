@@ -33,6 +33,7 @@ Gemstone::Gemstone(float P1[3], float P2[3], float P3[3], float P4[3], float he,
 	displayGemstoneEdges(false), displayGemstoneFill(true)
 {
 	//The 4 points we are initally give
+
 	points[0] = cryph::AffPoint(P1);
 	points[1] = cryph::AffPoint(P2);
 	points[2] = cryph::AffPoint(P3);
@@ -59,8 +60,8 @@ void Gemstone::defineGemstone()
 {
 	//Two points left to find - the top and bottom points
 
-	cryph::AffVector v1(points[3] + points[0]);
-	cryph::AffVector v2(points[1] + points[0]);
+	cryph::AffVector v1(points[3] - points[0]);
+	cryph::AffVector v2(points[1] - points[0]);
 
 	upVector = v2.cross(v1);
 	upVector.normalize();
@@ -69,6 +70,7 @@ void Gemstone::defineGemstone()
 	cryph::AffPoint center1 = 0.5 * cryph::AffPoint(points[0] + points[3]);
 	cryph::AffPoint center2 = 0.5 * cryph::AffPoint(points[1] + points[2]);
 	cryph::AffPoint center = 0.5 * (  center1 + center2  );
+
 
 	//Top = center + height * up
 	points[4] = center + height * upVector;
@@ -92,7 +94,7 @@ void Gemstone::defineGemstone()
 			zmax = points[i].z;
 	}
 
-	zmax *= 1.2; //there seems to be some strange clipping if I don't adjust this here...
+	//zmax *= 1.2; //there seems to be some strange clipping if I don't adjust this here...
 /*
 	std::cerr << "Bounds: " << std::endl;
 	std::cerr << "xmin: " << xmin << std::endl;
@@ -110,7 +112,7 @@ void Gemstone::defineGemstone()
 	};
 
 /*
-	std::cerr << "Points: " << std::endl;
+	std::cerr << "Gemstone Points: " << std::endl;
 	std::cerr << "B1: ( " << points[0].x << ", " << points[0].y << " , " << points[0].z << ") " << std::endl;
 	std::cerr << "B2: ( " << points[1].x << ", " << points[1].y << " , " << points[1].z << ") " << std::endl;
 	std::cerr << "B3: ( " << points[2].x << ", " << points[2].y << " , " << points[2].z << ") " << std::endl;
