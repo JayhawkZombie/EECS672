@@ -16,6 +16,7 @@ CustomGLFWController::CustomGLFWController(const std::string &windowTitle, int r
 
 void CustomGLFWController::handleMouseButton(Controller::MouseButton button, bool isPressed, int x, int y, int mods)
 {
+
 	if (button == LEFT_BUTTON && isPressed)
 	{
 		CustomGLFWController::clickedX = x;
@@ -25,7 +26,7 @@ void CustomGLFWController::handleMouseButton(Controller::MouseButton button, boo
 	else
 	{
 		CustomGLFWController::didClickLeft = false;
-	}
+	} 
 }
 
 void CustomGLFWController::handleMouseMotion(int x, int y)
@@ -36,7 +37,6 @@ void CustomGLFWController::handleMouseMotion(int x, int y)
 		float dY = y - clickedY;
 
 		ModelViewWithPhongLighting::addToGlobalRotationDegrees(dY / 5, dX / 5, 0);
-		redraw();
 
 		clickedX = x;
 		clickedY = y;
@@ -66,6 +66,7 @@ void CustomGLFWController::handleScroll(bool isUp)
 
 void CustomGLFWController::handleAsciiChar(unsigned char charPressed, int x, int y)
 {
+
 	if (charPressed == 'o')
 	{
 		ModelView::setProjection(ORTHOGONAL);
@@ -106,7 +107,7 @@ void CustomGLFWController::handleDisplay()
 
 	drawAllObjects(); 
 
-} */
+} 
 
 void CustomGLFWController::drawAllObjects()
 {
@@ -115,3 +116,4 @@ void CustomGLFWController::drawAllObjects()
 		(*it)->render();
 	}
 }
+*/
