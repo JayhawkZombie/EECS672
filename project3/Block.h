@@ -11,7 +11,7 @@ class Block : public ModelViewWithPhongLighting
 {
 public:
 	Block(float cx, float cy, float cz, // lower left corner
-	      float lx, float ly, float lz, float c[3]);// lengths in 3 directions
+	      float lx, float ly, float lz, float c[3], float alterValues[3]);// lengths in 3 directions
 	virtual ~Block();
 
 	float colors[3];
@@ -20,11 +20,15 @@ public:
 	void getMCBoundingBox(double* xyzLimits) const;
 	void handleCommand(unsigned char key, double ldsX, double ldsY);
 	void render();
+
+	void alterMinMaxReporting(float xFactor, float yFactor, float zFactor);
 	
 	static vec3 ka;
 	static vec3 ks;
 	static vec3 kd;
 	static float m;
+
+	float alterValues[3];
 
 private:
 	GLuint vao[1];
