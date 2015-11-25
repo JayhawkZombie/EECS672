@@ -20,7 +20,7 @@ vec3 Block::kd = {0.34615, 0.3143, 0.0903};
 vec3 Block::ks = {0.797357, 0.723991, 0.208006};
 float Block::m = 12.8;
 
-Block::Block(float cx, float cy, float cz, float lx, float ly, float lz, float c[3]) :
+Block::Block(float cx, float cy, float cz, float lx, float ly, float lz, float c[3], float alterVals[3]) :
 	displayBlockEdges(false), displayBlockFill(true)
 {
 	colors[0] = c[0];
@@ -30,7 +30,17 @@ Block::Block(float cx, float cy, float cz, float lx, float ly, float lz, float c
 	ymin = cy; ymax = cy + ly;
 	zmin = cz; zmax = cz + lz;
 	zmax *= 1.0;
+
+	alterMinMaxReporting(alterVals[0], alterVals[1], alterVals[2]);
+
 	defineBlock();
+}
+
+void Block::alterMinMaxReporting(float xFactor, float yFactor, float zFactor)
+{
+	alterValues[0] = xFactor;
+	alterValues[1] = yFactor;
+	alterValues[2] = zFactor;
 }
 
 Block::~Block()
@@ -70,12 +80,12 @@ void Block::defineBlock()
 // xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
 void Block::getMCBoundingBox(double* xyzLimits) const
 {
-	xyzLimits[0] = xmin;
-	xyzLimits[1] = xmax;
-	xyzLimits[2] = ymin;
-	xyzLimits[3] = ymax;
-	xyzLimits[4] = zmin;
-	xyzLimits[5] = zmax;
+	xyzLimits[0] = alterValues[0] * xmin;
+	xyzLimits[1] = alterValues[0] * xmax;
+	xyzLimits[2] = alterValues[1] * ymin;
+	xyzLimits[3] = alterValues[1] * ymax;
+	xyzLimits[4] = alterValues[2] * zmin;
+	xyzLimits[5] = alterValues[2] * zmax;
 }
 
 void Block::handleCommand(unsigned char key, double ldsX, double ldsY)
