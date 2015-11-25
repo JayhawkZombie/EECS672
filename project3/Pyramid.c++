@@ -113,7 +113,7 @@ void Pyramid::definePyramid()
 		{points[4].x, points[4].y, points[4].z}
 	};
 /*
-	std::cerr << "Points: " << std::endl;
+	std::cerr << "Pyramid Points: " << std::endl;
 	std::cerr << "B1: ( " << points[0].x << ", " << points[0].y << " , " << points[0].z << ") " << std::endl;
 	std::cerr << "B2: ( " << points[1].x << ", " << points[1].y << " , " << points[1].z << ") " << std::endl;
 	std::cerr << "B3: ( " << points[2].x << ", " << points[2].y << " , " << points[2].z << ") " << std::endl;
