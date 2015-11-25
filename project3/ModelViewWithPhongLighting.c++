@@ -57,14 +57,19 @@ ModelViewWithPhongLighting::ModelViewWithPhongLighting()
 	//set sources and strengths
 	//have NUM_LIGHTS of them
 
+	//( -500, 350, 750 ) -- Light coming from the top of the triforce
+	//pyramidPts3[0] = 700.0f / 2 - 50.0f;	pyramidPts3[1] = wedgePts2[1] + 400.0f; 	pyramidPts3[2] = 510.0f + 350.0f
 	sources[0][0] = 0.0f;		sources[0][1] = 0.0f; 		sources[0][2] = 1.0f;  		sources[0][3] = 0.0f;
-	sources[1][0] = -300.0f; 	sources[1][1] = 600.0f; 	sources[1][2] = 200.0f;  	sources[1][3] = 1.0f;
-	sources[2][0] = -300.0f;		sources[2][1] = -200.0f; 	sources[2][2] = 50.0f;  	sources[2][3] = 1.0f;
+	sources[1][0] = 300.0f; 	sources[1][1] = 0.0f; 	sources[1][2] = 550.0f;  	sources[1][3] = 1.0f;
+	//sources[1][0] = -2250.0f; 	sources[1][1] = 750.0f; 	sources[1][2] = -2500.0f;  	sources[1][3] = 1.0f;
+	sources[2][0] = -750.0f;		sources[2][1] = 1700.0f; 	sources[2][2] = 750.0f;  	sources[2][3] = 1.0f;
+	//sources[2][0] = 1000.0f;		sources[2][1] = 1000.0f; 	sources[2][2] = 1000.0f;  	sources[2][3] = 1.0f;
 
-	strengths[0][0] = 0.5f;			strengths[0][1] = 0.5f;			strengths[0][2] = 0.5f;
-	strengths[1][0] = 255 / 255.0f;	strengths[1][1] = 131 / 255.0f;	strengths[1][2] = 8 / 255.0f;
+	strengths[0][0] = 0.15f;			strengths[0][1] = 0.15f;			strengths[0][2] = 0.15f;
+	strengths[1][0] = (255 / 2.0f) / 255.0f;	strengths[1][1] = (238 / 2.0f) / 255.0f;	strengths[1][2] = 0 / 255.0f;
 	//strengths[1][0] = 0 / 255.0f;	strengths[1][1] = 0 / 255.0f;	strengths[1][2] = 0 / 255.0f;
-	strengths[2][0] = 0 / 255.0f;	strengths[2][1] = 204 / 255.0f;	strengths[2][2] = 109 / 255.0f;
+	//strengths[2][0] = 0 / 255.0f;	strengths[2][1] = 0 / 255.0f;	strengths[2][2] = 0 / 255.0f;
+	strengths[2][0] = 9 / 255.0f;	strengths[2][1] = 179 / 255.0f;	strengths[2][2] = 170 / 255.0f;
 
 
 }
