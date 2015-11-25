@@ -67,7 +67,9 @@ uniform float m = 20.0f;
 uniform int numLights = 1;
 
 
-
+float attenuation = 0.0f;
+float oneOverAttenuation = 1.0f;
+float maxDistanceForLocalLight = 10000;
 
 
 out vec3 colorToFS;
@@ -117,19 +119,22 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 				ecLi = vec3(0.0, 0.0, 1.0);
 			}
 
-			ecLi = vec3(0.0, 0.0, 1.0);
+			ecLi = normalize(vec3(0.0, 0.0, 1.0));
+			attenuation = 0.0f;
 		}
 		
 		//If it's not directional, then find the vector from the point to the light source
 		else
 		{
-			ecLi = vec3(sources[i].xyz - ec_Q);
+			ecLi = vec3(sources[i].xyz);
+			attenuation = length(ecLi);
 			//ecLi = -vec3(ec_Q);
 		}
 
 		//Convert to eye coordinates
 		//If I don't do this, it looks like garbage
-		ecLi = (mc_ec * vec4(ecLi, 0.0)).xyz;
+		//Don't need to do this anymore
+		//ecLi = (mc_ec * vec4(ecLi, 0.0)).xyz;
 
 		ecLi = normalize(ecLi);
 
@@ -140,7 +145,8 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 		else
 		{
 			//Add the diffuse portion
-			Iq += kd * max((dot(ecLi, ec_nHat)), 0.0) * strengths[i]; //Either add the positive amount of light, or add nothing - we don't want to subtract light
+
+			Iq += (1 - (attenuation / maxDistanceForLocalLight)) * kd * max((dot(ecLi, ec_nHat)), 0.0) * strengths[i]; //Either add the positive amount of light, or add nothing - we don't want to subtract light
 
 
 			//Need to get ri - angle of incidence = angle of reflection
@@ -155,7 +161,7 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 			//ri = ecLi - ri;
 			//ri = normalize(reflect(ecLi, ec_nHat));
 
-			if (dot(ec_nHat, ec_v) < 0)
+			if (dot(ri, ec_v) < 0)
 			{
 				//ignore specular lighting
 				//We are on the same side of the point as the light source - we won't be able to see the specular part
@@ -178,7 +184,7 @@ vec3 evaluateLightingModel(in vec3 ec_Q, in vec3 ec_nHat)
 
 					//Iq += ks * strengths[i]; // * pow(dot(ri, ec_v), m);
 					//It apparently can't find ks and m...BUT THEY'RE RIGHT HERE!!!
-					Iq += ks * pow(dot(ri, ec_v), m) * strengths[i];
+					Iq += (1 - (attenuation / maxDistanceForLocalLight)) * ks * pow(dot(ri, ec_v), m) * strengths[i];
 				}
 				
 			}
