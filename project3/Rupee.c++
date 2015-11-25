@@ -93,7 +93,7 @@ void Rupee::defineRupee()
 	points[6] = centerOfPlane + thickness * upVectorPerpToPlane;
 	points[7] = centerOfPlane - thickness * upVectorPerpToPlane;
 
-	std::cerr << "Thickness: " << thickness;
+	//std::cerr << "Thickness: " << thickness;
 
 	//Let's get xmin, xmax, etc...
 
