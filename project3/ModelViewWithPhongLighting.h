@@ -29,12 +29,17 @@ public:
 	static float globalXRot;
 	static float globalYRot;
 
+	static int clickedX;
+	static int clickedY;
+	static bool didClickLeft;
+
 	void sendToGPU(const vec3 &ka, const vec3 &kd, const vec3 &ks, const float m);
 
 	static vec3 ka;
 	static vec3 ks;
 	static vec3 kd;
 	static float m;
+
 
 protected:
 
